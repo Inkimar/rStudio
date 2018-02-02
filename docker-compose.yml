@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+
+  proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      #- ./nginx-proxy-certs:/etc/nginx/certs:ro
+      - ./nginx-proxy.conf:/etc/nginx/conf.d/nginx-proxy.conf:ro
+    environment:
+      - DNSDOCK_ALIAS=web.rstudio
+
+  mirroreum:
+    image: raquamaps/mirroreum:latest
+    container_name: mirroreum
+    env_file: ./env/.envmirroreum
+    environment:
+      - VIRTUAL_HOST=my.web.rstudio
+      - VIRTUAL_PORT=8787
+    volumes:
+      - data_mirroreum:/home/rstudio
+
+volumes:
+  data_mirroreum:
