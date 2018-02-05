@@ -16,8 +16,8 @@ services:
       - DNSDOCK_ALIAS=web.rstudio
 
   mirroreum:
-    #image: raquamaps/mirroreum:latest
-    image: rocker/rstudio:latest
+    image: raquamaps/mirroreum:latest
+    #image: rocker/rstudio:latest
     container_name: rstudio
     env_file: ./env/.envmirroreum
     environment:
